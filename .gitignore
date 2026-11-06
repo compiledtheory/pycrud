@@ -151,6 +151,8 @@ activemq-data/
 
 # Environments
 .env
+.env.*
+!.env.example
 .envrc
 .venv
 env/
@@ -158,6 +160,12 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Local database files (Docker named volumes are stored outside the repository)
+/pgdata/
+/postgres-data/
+*.dump
+*.backup
 
 # Spyder project settings
 .spyderproject
