@@ -1,1 +1,0 @@
-from app.notifications.web.routes import router as notifications_router
