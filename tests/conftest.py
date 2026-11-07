@@ -3,7 +3,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 
 from app.REST.data.database import SessionLocal, engine, get_db
-from app.REST.main import app
+import main
+from main import app
 from app.REST.model.products.product_history_orm import ProductHistoryORM
 from app.REST.model.products.product_orm import ProductORM
 
@@ -34,7 +35,9 @@ def db_session():
 
 
 @pytest.fixture(scope="function")
-def client(db_session):
+def client(db_session, monkeypatch):
+    monkeypatch.setattr(main, "run_worker", lambda: None)
+
     def override_get_db():
         yield db_session
 

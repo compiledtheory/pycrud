@@ -1,7 +1,7 @@
 services:
   postgres:
     build:
-      context: ./db
+      context: ./app/db
       dockerfile: Dockerfile
     container_name: postgres_ztp
     environment:
@@ -12,6 +12,20 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog_ztp
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+  ntfy:
+    image: binwiederhier/ntfy
+    container_name: ntfy_ztp
+    command: serve
+    ports:
+      - "8088:80"
 
 volumes:
   pgdata:

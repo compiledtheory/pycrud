@@ -16,7 +16,7 @@ from app.REST.service.products.product_validators import (
 	ValidationError,
 )
 
-product_router = APIRouter(prefix="/api/v1", tags=["Products"])
+product_router = APIRouter(tags=["Products"])
 
 
 @product_router.get("/")

@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS notifications (
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    content TEXT NOT NULL,
+    channel VARCHAR(32) NOT NULL,
+    recipient VARCHAR(255) NOT NULL,
+    scheduled_at TIMESTAMPTZ NOT NULL,
+    timezone VARCHAR(64) NOT NULL,
+    status VARCHAR(32) NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
