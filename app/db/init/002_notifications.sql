@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS notifications (
     idempotency_key VARCHAR UNIQUE NOT NULL
 );
 
--- Upgrade existing 2.2 databases without dropping notification records.
 ALTER TABLE notifications
     ADD COLUMN IF NOT EXISTS idempotency_key VARCHAR;
 
