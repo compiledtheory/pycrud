@@ -115,3 +115,14 @@ def test_process_ready_sends_due_notifications(client, db_session, monkeypatch):
     get_response = client.get(f"/api/v1/notifications/{notification_id}")
     assert get_response.status_code == 200, get_response.text
     assert get_response.json()["status"] == "SENT"
+
+def test_notification_idempotency_key_and_metrics(client):
+    create_response = client.post("/api/v1/notifications", json=_notification_payload())
+    assert create_response.status_code == 201
+    body = create_response.json()
+    assert body["idempotency_key"].startswith("notif_")
+
+    metrics_response = client.get("/api/v1/metrics")
+    assert metrics_response.status_code == 200
+    assert "notifications_pending_total" in metrics_response.text
+    assert 'notifications_by_channel{status="PENDING",channel="EMAIL"}' in metrics_response.text
