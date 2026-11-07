@@ -22,3 +22,4 @@ class NotificationORM(Base):
         nullable=False,
         default=lambda: datetime.now(timezone.utc),
     )
+    idempotency_key: Mapped[str] = mapped_column(String, nullable=False, unique=True)

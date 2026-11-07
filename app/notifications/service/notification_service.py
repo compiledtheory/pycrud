@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+import secrets
 
 from app.notifications.data.notification_repository import (
     add_notification,
@@ -19,6 +20,7 @@ from app.notifications.service.notification_validators import (
 )
 from app.notifications.service.notification_dispatcher import dispatch_notification
 
+def generate_idempotency_key() -> str: return f"notif_{secrets.token_urlsafe(24)}"
 
 def create_notification(db: Session, notification_data: NotificationCreate) -> NotificationORM:
     validate_content(notification_data.content)
@@ -38,6 +40,7 @@ def create_notification(db: Session, notification_data: NotificationCreate) -> N
         scheduled_at=scheduled_at_utc,
         timezone=notification_data.timezone,
         status=NotificationStatus.PENDING.value,
+        idempotency_key=generate_idempotency_key(),
     )
 
     return add_notification(db, notification)

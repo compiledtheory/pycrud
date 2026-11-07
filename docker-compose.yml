@@ -27,5 +27,12 @@ services:
     ports:
       - "8088:80"
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus_ztp
+    network_mode: host
+    volumes:
+      - ./.config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
 volumes:
   pgdata:
