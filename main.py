@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from app.REST.web.router import product_router
 from app.notifications.docs_app import notifications_docs_app
+from app.REST.docs_app import product_docs_app
 from app.notifications.web.router import router as notifications_router
 
 from contextlib import asynccontextmanager
@@ -22,6 +23,7 @@ app = FastAPI(
 app.include_router(product_router, prefix="/api/v1")
 app.include_router(notifications_router, prefix="/api/v1")
 
+app.mount("/product-docs", product_docs_app)
 app.mount("/notifications-docs", notifications_docs_app)
 
 

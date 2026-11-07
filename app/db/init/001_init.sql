@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS category(
     CONSTRAINT category_price_range_valid CHECK (min_price >= 0 AND max_price >= min_price)
 );
 
--- Upgrade databases created by earlier lab stages without dropping existing data.
 ALTER TABLE category ADD COLUMN IF NOT EXISTS min_price NUMERIC(10, 2);
 ALTER TABLE category ADD COLUMN IF NOT EXISTS max_price NUMERIC(10, 2);
 UPDATE category
@@ -32,8 +31,8 @@ CREATE TABLE IF NOT EXISTS product(
 );
 
 INSERT INTO product(name, price, available_quantity, category_id) VALUES
-    ('Mechanical Keyboard', 89.50, 12, 1),
-    ('Office Chair', 199.99, 8, 2),
+    ('Keyboard', 89.50, 12, 1),
+    ('Chair', 199.99, 8, 2),
     ('Monitor', 349.00, 5, 1)
 ON CONFLICT DO NOTHING;
 
